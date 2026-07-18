@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Voice | VoiceCloner</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
+</head>
+
+<body>
+
+<header class="navbar">
+    <a class="logo" href="{{ url_for('home') }}">
+        <span class="logo-icon">V</span>
+        VoiceCloner
+    </a>
+
+    <nav class="nav-links">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a class="active-link" href="{{ url_for('upload') }}">Create Voice</a>
+        <a href="{{ url_for('generate') }}">Generate Speech</a>
+        <a href="{{ url_for('profile') }}">Profiles</a>
+    </nav>
+</header>
+
+<main class="app-page">
+
+    <section class="page-heading">
+        <div class="hero-badge">Create Voice Profile</div>
+
+        <h1>Provide a voice sample</h1>
+
+        <p>
+            Upload an authorised MP3 or WAV recording, or record directly
+            using your microphone.
+        </p>
+    </section>
+
+    <section class="upload-panel">
+
+        <div class="input-method-tabs">
+            <button
+                class="method-tab active"
+                id="uploadTab"
+                type="button"
+            >
+                Upload Audio
+            </button>
+
+            <button
+                class="method-tab"
+                id="recordTab"
+                type="button"
+            >
+                Record Voice
+            </button>
+        </div>
+
+        <div class="input-section active" id="uploadSection">
+
+            <div class="drop-zone" id="dropZone">
+                <input
+                    type="file"
+                    id="audioFileInput"
+                    accept=".mp3,.wav,audio/mpeg,audio/wav"
+                    hidden
+                >
+
+                <div class="drop-zone-icon">↑</div>
+
+                <h2>Drag and drop your audio here</h2>
+
+                <p>MP3 or WAV files supported</p>
+
+                <button
+                    class="secondary-button browse-button"
+                    id="browseButton"
+                    type="button"
+                >
+                    Browse Files
+                </button>
+            </div>
+
+        </div>
+
+        <div class="input-section" id="recordSection">
+
+            <div class="recording-box">
+
+                <div class="record-status-icon" id="recordStatusIcon">
+                    <span></span>
+                </div>
+
+                <h2 id="recordingStatus">Ready to record</h2>
+
+                <p id="recordingTimer">00:00</p>
+
+                <div class="record-controls">
+                    <button
+                        class="primary-button"
+                        id="startRecordingButton"
+                        type="button"
+                    >
+                        Start Recording
+                    </button>
+
+                    <button
+                        class="danger-button"
+                        id="stopRecordingButton"
+                        type="button"
+                        disabled
+                    >
+                        Stop Recording
+                    </button>
+                </div>
+
+                <p class="permission-note">
+                    Your browser will request permission to use your microphone.
+                </p>
+
+            </div>
+
+        </div>
+
+        <section class="audio-preview hidden" id="audioPreview">
+
+            <div class="preview-heading">
+                <div>
+                    <p class="section-label">Selected Audio</p>
+                    <h2 id="selectedFileName">No file selected</h2>
+                </div>
+
+                <button
+                    class="remove-button"
+                    id="removeAudioButton"
+                    type="button"
+                >
+                    Remove
+                </button>
+            </div>
+
+            <audio id="audioPlayer" controls></audio>
+
+            <div class="audio-information">
+
+                <article class="information-card">
+                    <span>File size</span>
+                    <strong id="fileSize">—</strong>
+                </article>
+
+                <article class="information-card">
+                    <span>Duration</span>
+                    <strong id="audioDuration">—</strong>
+                </article>
+
+                <article class="information-card">
+                    <span>Format</span>
+                    <strong id="audioFormat">—</strong>
+                </article>
+
+                <article class="information-card">
+                    <span>Status</span>
+                    <strong class="ready-status">Ready</strong>
+                </article>
+
+            </div>
+
+            <div class="consent-box">
+                <input type="checkbox" id="consentCheckbox">
+
+                <label for="consentCheckbox">
+                    I confirm that I have permission to use this voice recording.
+                </label>
+            </div>
+
+            <button
+                class="primary-button analyse-button"
+                id="analyseButton"
+                type="button"
+                disabled
+            >
+                Analyse Voice
+            </button>
+
+            <p class="analysis-message" id="analysisMessage"></p>
+
+        </section>
+
+    </section>
+
+</main>
+
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+<script src="{{ url_for('static', filename='js/recorder.js') }}"></script>
+
+</body>
+</html>
