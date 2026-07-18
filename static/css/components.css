@@ -1,0 +1,48 @@
+.primary-button,
+.secondary-button {
+    min-width: 180px;
+    padding: 15px 23px;
+    border-radius: 12px;
+    font-weight: 700;
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.primary-button {
+    color: white;
+    border: 0;
+    background: linear-gradient(
+        135deg,
+        var(--primary),
+        #5b8dff
+    );
+    box-shadow: 0 15px 40px rgba(124, 92, 255, 0.28);
+}
+
+.secondary-button {
+    color: white;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.primary-button:hover,
+.secondary-button:hover {
+    transform: translateY(-2px);
+}
+
+.secondary-button:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.hero-badge {
+    width: fit-content;
+    margin: 0 auto 25px;
+    padding: 9px 15px;
+    border: 1px solid rgba(124, 92, 255, 0.35);
+    border-radius: 999px;
+    color: var(--primary-light);
+    background: rgba(124, 92, 255, 0.09);
+    font-size: 0.86rem;
+    font-weight: 600;
+}
