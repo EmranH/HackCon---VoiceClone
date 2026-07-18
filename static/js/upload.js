@@ -206,13 +206,50 @@ consentCheckbox.addEventListener("change", () => {
         !consentCheckbox.checked || !selectedAudioFile;
 });
 
-analyseButton.addEventListener("click", () => {
+analyseButton.addEventListener("click", uploadAudioForAnalysis);
+
+async function uploadAudioForAnalysis() {
     if (!selectedAudioFile || !consentCheckbox.checked) {
         return;
     }
 
-    analysisMessage.textContent =
-        "Audio selected successfully. Backend analysis will be connected next.";
-});
+    analyseButton.disabled = true;
+    analyseButton.textContent = "Uploading...";
+    analysisMessage.classList.remove("error-message");
+    analysisMessage.textContent = "Saving your audio securely...";
+
+    const formData = new FormData();
+    formData.append("audio", selectedAudioFile);
+
+    try {
+        const response = await fetch("/api/upload-audio", {
+            method: "POST",
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                result.message || "The audio could not be uploaded."
+            );
+        }
+
+        analysisMessage.textContent =
+            `Upload complete: ${result.file.original_name}`;
+
+        analyseButton.textContent = "Audio Uploaded";
+
+        console.log("Saved audio:", result.file);
+    } catch (error) {
+        console.error(error);
+
+        analysisMessage.classList.add("error-message");
+        analysisMessage.textContent = error.message;
+
+        analyseButton.disabled = false;
+        analyseButton.textContent = "Analyse Voice";
+    }
+}
 
 window.useRecordedAudio = useRecordedAudio;

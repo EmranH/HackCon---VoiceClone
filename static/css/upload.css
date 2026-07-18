@@ -360,3 +360,7 @@ audio {
         grid-template-columns: 1fr;
     }
 }
+
+.analysis-message.error-message {
+    color: #ff758f;
+}

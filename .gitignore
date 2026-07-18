@@ -1,0 +1,14 @@
+# Temporary and generated audio
+static/uploads/temp/*
+static/generated/*
+
+# Keep empty folders in Git
+!static/uploads/temp/.gitkeep
+!static/generated/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+
+# Environment variables
+.env
