@@ -1,6 +1,8 @@
 from pathlib import Path
 from uuid import uuid4
 
+from services.voice_profile import VoiceProfileService
+
 from flask import Flask, jsonify, render_template, request
 from werkzeug.utils import secure_filename
 
@@ -12,6 +14,15 @@ TEMP_UPLOAD_FOLDER = BASE_DIR / "static" / "uploads" / "temp"
 
 ALLOWED_EXTENSIONS = {"mp3", "wav", "webm"}
 MAX_FILE_SIZE = 25 * 1024 * 1024  # 25 MB
+
+PROFILE_AUDIO_FOLDER = BASE_DIR / "static" / "uploads" / "profiles"
+PROFILE_DATABASE_FILE = BASE_DIR / "database" / "voice_profiles.json"
+
+voice_profile_service = VoiceProfileService(
+    temp_folder=TEMP_UPLOAD_FOLDER,
+    profiles_folder=PROFILE_AUDIO_FOLDER,
+    database_file=PROFILE_DATABASE_FILE
+)
 
 app.config["MAX_CONTENT_LENGTH"] = MAX_FILE_SIZE
 
@@ -85,6 +96,71 @@ def upload_audio():
             "format": extension.upper()
         }
     }), 201
+
+
+@app.route("/api/voice-profiles", methods=["POST"])
+def create_voice_profile():
+    data = request.get_json(silent=True)
+
+    if not data:
+        return jsonify({
+            "success": False,
+            "message": "No profile information was provided."
+        }), 400
+
+    required_fields = [
+        "name",
+        "stored_name",
+        "original_name",
+        "format",
+        "size",
+        "duration"
+    ]
+
+    missing_fields = [
+        field for field in required_fields
+        if not data.get(field)
+    ]
+
+    if missing_fields:
+        return jsonify({
+            "success": False,
+            "message": "Some profile information is missing."
+        }), 400
+
+    try:
+        profile = voice_profile_service.create_profile(
+            profile_name=data["name"],
+            stored_filename=data["stored_name"],
+            original_filename=data["original_name"],
+            audio_format=data["format"],
+            file_size=data["size"],
+            duration=data["duration"]
+        )
+
+        return jsonify({
+            "success": True,
+            "message": "Voice profile created successfully.",
+            "profile": profile
+        }), 201
+
+    except ValueError as error:
+        return jsonify({
+            "success": False,
+            "message": str(error)
+        }), 400
+
+    except FileNotFoundError as error:
+        return jsonify({
+            "success": False,
+            "message": str(error)
+        }), 404
+
+    except OSError:
+        return jsonify({
+            "success": False,
+            "message": "The voice profile could not be saved."
+        }), 500
 
 
 @app.errorhandler(413)
