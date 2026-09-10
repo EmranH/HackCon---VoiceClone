@@ -1,0 +1,23 @@
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
+.progress-title {
+    font-weight: bold;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.progress-percentage {
+    font-weight: bold;
+}
+
+#elapsed-time {
+    margin-top: 8px;
+    color: #777;
+    font-size: 14px;
+}

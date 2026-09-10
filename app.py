@@ -2,6 +2,7 @@ from pathlib import Path
 from uuid import uuid4
 
 from services.voice_profile import VoiceProfileService
+from services.speech_generator import SpeechGeneratorService
 
 from flask import Flask, jsonify, render_template, request
 from werkzeug.utils import secure_filename
@@ -17,6 +18,7 @@ MAX_FILE_SIZE = 25 * 1024 * 1024  # 25 MB
 
 PROFILE_AUDIO_FOLDER = BASE_DIR / "static" / "uploads" / "profiles"
 PROFILE_DATABASE_FILE = BASE_DIR / "database" / "voice_profiles.json"
+GENERATED_AUDIO_FOLDER = BASE_DIR / "static" / "generated"
 
 voice_profile_service = VoiceProfileService(
     temp_folder=TEMP_UPLOAD_FOLDER,
@@ -24,9 +26,12 @@ voice_profile_service = VoiceProfileService(
     database_file=PROFILE_DATABASE_FILE
 )
 
+speech_generator_service = SpeechGeneratorService()
+
 app.config["MAX_CONTENT_LENGTH"] = MAX_FILE_SIZE
 
 TEMP_UPLOAD_FOLDER.mkdir(parents=True, exist_ok=True)
+GENERATED_AUDIO_FOLDER.mkdir(parents=True, exist_ok=True)
 
 
 def allowed_file(filename: str) -> bool:
@@ -162,6 +167,107 @@ def create_voice_profile():
             "message": "The voice profile could not be saved."
         }), 500
 
+@app.route("/api/voice-profiles", methods=["GET"])
+def get_voice_profiles():
+    profiles = voice_profile_service.get_profiles()
+
+    return jsonify({
+        "success": True,
+        "profiles": profiles
+    }), 200
+
+@app.route("/api/generate-speech", methods=["POST"])
+def generate_speech():
+    data = request.get_json(silent=True)
+
+    if not data:
+        return jsonify({
+            "success": False,
+            "message": "No generation information was provided."
+        }), 400
+
+    text = str(data.get("text", "")).strip()
+    profile_id = str(data.get("profile_id", "")).strip()
+
+    if not text:
+        return jsonify({
+            "success": False,
+            "message": "Please enter some text to generate."
+        }), 400
+
+    if not profile_id:
+        return jsonify({
+            "success": False,
+            "message": "Please select a voice profile."
+        }), 400
+
+    profile = voice_profile_service.get_profile(profile_id)
+
+    if profile is None:
+        return jsonify({
+            "success": False,
+            "message": "The selected voice profile could not be found."
+        }), 404
+
+    stored_name = str(profile.get("stored_filename", ""))
+    safe_stored_name = Path(stored_name).name
+
+    if not safe_stored_name or safe_stored_name != stored_name:
+        return jsonify({
+            "success": False,
+            "message": "The selected voice profile is invalid."
+        }), 400
+
+    reference_audio_path = PROFILE_AUDIO_FOLDER / safe_stored_name
+
+    if reference_audio_path.suffix.lower() != ".wav":
+        return jsonify({
+            "success": False,
+            "message": (
+                "This voice profile is not stored as a WAV file. "
+                "Please create or convert it to WAV first."
+        )
+    }), 400
+
+    output_filename = f"{uuid4().hex}.wav"
+    output_path = GENERATED_AUDIO_FOLDER / output_filename
+
+    try:
+        speech_generator_service.generate_speech(
+            text=text,
+            reference_audio_path=reference_audio_path,
+            output_path=output_path
+        )
+
+        return jsonify({
+            "success": True,
+            "message": "Speech generated successfully.",
+            "audio": {
+                "filename": output_filename,
+                "url": f"/static/generated/{output_filename}"
+            }
+        }), 201
+
+    except ValueError as error:
+        return jsonify({
+            "success": False,
+            "message": str(error)
+        }), 400
+
+    except FileNotFoundError as error:
+        return jsonify({
+            "success": False,
+            "message": str(error)
+        }), 404
+
+    except Exception:
+        app.logger.exception("Chatterbox generation failed")
+
+        return jsonify({
+            "success": False,
+            "message": "Speech generation failed. Check the terminal."
+        }), 500
+    
 
 @app.errorhandler(413)
 def file_too_large(_error):

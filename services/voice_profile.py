@@ -80,3 +80,11 @@ class VoiceProfileService:
             return json.loads(content)
         except (json.JSONDecodeError, FileNotFoundError):
             return []
+    
+    def get_profile(self, profile_id: str) -> dict | None:
+        for profile in self.get_profiles():
+            if profile.get("id") == profile_id:
+                return profile
+
+        return None
+    
