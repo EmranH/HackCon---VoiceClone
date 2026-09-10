@@ -240,7 +240,18 @@ async function uploadAudioForAnalysis() {
 
         analyseButton.textContent = "Audio Uploaded";
 
-        console.log("Saved audio:", result.file);
+        sessionStorage.setItem(
+            "uploadedAudio",
+            JSON.stringify({
+                originalName: result.file.original_name,
+                storedName: result.file.stored_name,
+                format: result.file.format,
+                size: formatFileSize(selectedAudioFile.size),
+                duration: audioDuration.textContent
+            })
+        );
+
+        window.location.href = "/profiles";
     } catch (error) {
         console.error(error);
 

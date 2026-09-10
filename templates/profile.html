@@ -1,3 +1,158 @@
-<h1>Saved Profiles</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<a href="/">Back Home</a>
+    <title>Voice Analysis</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/global.css') }}"
+    >
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/navbar.css') }}"
+    >
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/profiles.css') }}"
+    >
+
+    <script
+        src="{{ url_for('static', filename='js/profile.js') }}"
+        defer
+    ></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">VoiceCloner</a>
+
+        <div class="navbar-links">
+            <a href="/">Home</a>
+            <a href="/upload">Upload</a>
+            <a href="/profiles" class="active">Profiles</a>
+            <a href="/generate">Generate</a>
+        </div>
+    </nav>
+
+    <main class="profile-page">
+        <section class="analysis-card">
+            <div class="analysis-heading">
+                <p class="eyebrow">Voice profile setup</p>
+                <h1>Voice Analysis</h1>
+
+                <p>
+                    Review the uploaded audio before creating a
+                    reusable voice profile.
+                </p>
+            </div>
+
+            <div
+                id="noAudioMessage"
+                class="no-audio-message hidden"
+            >
+                <h2>No uploaded audio found</h2>
+
+                <p>
+                    Upload or record an audio sample before creating
+                    a voice profile.
+                </p>
+
+                <a href="/upload" class="primary-link">
+                    Upload Audio
+                </a>
+            </div>
+
+            <div id="analysisContent">
+                <div class="success-message">
+                    <span class="success-icon">✓</span>
+
+                    <div>
+                        <strong>Audio uploaded successfully</strong>
+                        <p>Your file is ready for analysis.</p>
+                    </div>
+                </div>
+
+                <div class="audio-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Filename</span>
+                        <strong id="profileFileName">—</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">File size</span>
+                        <strong id="profileFileSize">—</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Format</span>
+                        <strong id="profileFileFormat">—</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Duration</span>
+                        <strong id="profileAudioDuration">—</strong>
+                    </div>
+                </div>
+
+                <div class="analysis-status">
+                    <div>
+                        <span class="detail-label">Analysis status</span>
+                        <h2 id="analysisStatus">Ready to analyse</h2>
+                    </div>
+
+                    <span
+                        id="statusBadge"
+                        class="status-badge ready"
+                    >
+                        Ready
+                    </span>
+                </div>
+
+                <div class="profile-name-field">
+                    <label for="profileName">
+                        Voice profile name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="profileName"
+                        maxlength="50"
+                        placeholder="For example, Luke Voice"
+                    >
+
+                    <small>
+                        Choose a clear name so you can recognise this
+                        voice later.
+                    </small>
+                </div>
+
+                <p
+                    id="profileMessage"
+                    class="profile-message"
+                    aria-live="polite"
+                ></p>
+
+                <div class="analysis-actions">
+                    <a href="/upload" class="secondary-link">
+                        Choose Another File
+                    </a>
+
+                    <button
+                        type="button"
+                        id="createProfileButton"
+                        class="primary-button"
+                    >
+                        Create Voice Profile
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

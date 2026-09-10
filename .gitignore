@@ -1,10 +1,5 @@
-# Temporary and generated audio
-static/uploads/temp/*
-static/generated/*
-
-# Keep empty folders in Git
-!static/uploads/temp/.gitkeep
-!static/generated/.gitkeep
+# Virtual environment
+.venv/
 
 # Python
 __pycache__/
@@ -12,3 +7,20 @@ __pycache__/
 
 # Environment variables
 .env
+
+# Temporary uploads
+static/uploads/temp/*
+
+# User voice profiles
+static/uploads/profiles/*
+
+# Generated speech
+static/generated/*
+
+# Keep empty folders
+!static/uploads/temp/.gitkeep
+!static/uploads/profiles/.gitkeep
+!static/generated/.gitkeep
+
+# Database
+database/voice_profiles.json
