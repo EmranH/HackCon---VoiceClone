@@ -8,11 +8,21 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Generate Voice</title>
+    <title>Generate Speech | VoiceCloner</title>
 
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='css/global.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/navbar.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/components.css') }}"
     >
 
     <link
@@ -22,411 +32,251 @@
 </head>
 
 <body>
-    <main>
-        <h1>Generate Cloned Speech</h1>
 
-        <p>
-            Select a saved voice profile and enter what the cloned voice
-            should say.
-        </p>
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            VoiceCloner
+        </a>
 
-        <form id="generate-form">
-            <label for="voice-profile">
-                Voice profile
-            </label>
-
-            <select id="voice-profile" required>
-                <option value="">
-                    Loading voice profiles...
-                </option>
-            </select>
-
-            <label for="speech-text">
-                Text to generate
-            </label>
-
-            <textarea
-                id="speech-text"
-                rows="7"
-                maxlength="1000"
-                placeholder="Enter what the cloned voice should say..."
-                required
-            ></textarea>
-
-            <button id="generate-button" type="submit">
+        <div class="navbar-links">
+            <a href="/">Home</a>
+            <a href="/upload">Create Voice</a>
+            <a href="/profiles">Profiles</a>
+            <a href="/generate" class="active">
                 Generate Speech
-            </button>
-        </form>
-
-        <div id="progress-wrapper" hidden>
-
-            <div class="progress-title">
-                AI Voice Generation
-            </div>
-
-            <div
-                id="progress-section"
-                class="progress-container"
-            >
-                <div
-                    id="progress-bar"
-                    class="progress-bar"
-                ></div>
-            </div>
-
-            <div class="progress-info">
-                <span id="progress-status">
-                    Preparing...
-                </span>
-
-                <span
-                    id="progress-percentage"
-                    class="progress-percentage"
-                >
-                    0%
-                </span>
-            </div>
-
-            <div id="elapsed-time">
-                Elapsed: 00:00
-            </div>
+            </a>
         </div>
+    </nav>
 
-        <p id="generation-status" aria-live="polite"></p>
 
-        <section id="audio-result" hidden>
-            <h2>Generated audio</h2>
+    <main class="generate-page">
 
-            <audio id="generated-audio" controls></audio>
+        <section class="generate-heading">
+
+            <p class="eyebrow">
+                AI voice generation
+            </p>
+
+            <h1>
+                Generate Speech
+            </h1>
 
             <p>
-                <a id="download-link" download>
-                    Download generated WAV
-                </a>
+                Select one of your saved voice profiles,
+                enter your text and generate cloned speech.
             </p>
+
         </section>
 
-        <p>
-            <a href="/">Back Home</a>
-        </p>
+
+        <section class="generate-card">
+
+            <form id="generate-form">
+
+                <div class="form-group">
+
+                    <label for="voice-profile">
+                        Voice profile
+                    </label>
+
+                    <select
+                        id="voice-profile"
+                        required
+                    >
+                        <option value="">
+                            Loading voice profiles...
+                        </option>
+                    </select>
+
+                    <small>
+                        Choose the voice you want to use.
+                    </small>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="speech-text">
+                        What should the voice say?
+                    </label>
+
+                    <textarea
+                        id="speech-text"
+                        rows="7"
+                        maxlength="1000"
+                        placeholder="Enter the text you want the cloned voice to say..."
+                        required
+                    ></textarea>
+
+                    <small>
+                        Maximum 1000 characters.
+                    </small>
+
+                </div>
+
+
+                <div class="generate-actions">
+
+                    <a
+                        href="/profiles"
+                        class="secondary-link"
+                    >
+                        ← Choose Another Voice
+                    </a>
+
+                    <button
+                        id="generate-button"
+                        type="submit"
+                        class="primary-button"
+                    >
+                        Generate Speech
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <p
+                id="generation-status"
+                class="generation-status"
+                aria-live="polite"
+            ></p>
+
+
+            <div
+                id="progress-wrapper"
+                class="progress-wrapper"
+                hidden
+            >
+
+                <div class="progress-header">
+
+                    <span class="progress-title">
+                        AI Voice Generation
+                    </span>
+
+                    <span
+                        id="progress-percentage"
+                        class="progress-percentage"
+                    >
+                        0%
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="progress-section"
+                    class="progress-container"
+                >
+                    <div
+                        id="progress-bar"
+                        class="progress-bar"
+                    ></div>
+                </div>
+
+
+                <div class="progress-info">
+
+                    <span id="progress-status">
+                        Preparing...
+                    </span>
+
+                    <span id="elapsed-time">
+                        Elapsed: 00:00
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <section
+                id="audio-result"
+                class="audio-result"
+                hidden
+            >
+
+                <div class="audio-result-heading">
+
+                    <div>
+                        <p class="eyebrow">
+                            Generation complete
+                        </p>
+
+                        <h2>
+                            Your Generated Voice
+                        </h2>
+                    </div>
+
+                    <span class="success-icon">
+                        ✓
+                    </span>
+
+                </div>
+
+
+                <audio
+                    id="generated-audio"
+                    controls
+                ></audio>
+
+
+                <div class="audio-result-actions">
+
+                    <a
+                        id="download-link"
+                        class="secondary-link"
+                        download
+                    >
+                        Download WAV
+                    </a>
+
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <section class="generate-help">
+
+            <h2>
+                Need a different voice?
+            </h2>
+
+            <p>
+                Go back to your profiles or create a new voice.
+            </p>
+
+            <div class="generate-help-links">
+
+                <a
+                    href="/profiles"
+                    class="secondary-link"
+                >
+                    View Profiles
+                </a>
+
+                <a
+                    href="/upload"
+                    class="primary-link"
+                >
+                    Create New Voice
+                </a>
+
+            </div>
+
+        </section>
+
     </main>
 
-    <script>
-        const generateForm =
-            document.getElementById("generate-form");
 
-        const voiceProfileSelect =
-            document.getElementById("voice-profile");
+    <script
+        src="{{ url_for('static', filename='js/generate.js') }}"
+    ></script>
 
-        const speechTextInput =
-            document.getElementById("speech-text");
-
-        const generateButton =
-            document.getElementById("generate-button");
-
-        const progressSection =
-            document.getElementById("progress-section");
-
-        const progressBar =
-            document.getElementById("progress-bar");
-
-        const generationStatus =
-            document.getElementById("generation-status");
-
-        const audioResult =
-            document.getElementById("audio-result");
-
-        const generatedAudio =
-            document.getElementById("generated-audio");
-
-        const downloadLink =
-            document.getElementById("download-link");
-
-        let progressTimer = null;
-
-        const progressWrapper =
-            document.getElementById("progress-wrapper");
-
-        const progressStatus =
-            document.getElementById("progress-status");
-
-        const progressPercentage =
-            document.getElementById("progress-percentage");
-
-        const elapsedTime =
-            document.getElementById("elapsed-time");
-
-        let elapsedInterval = null;
-
-        async function loadVoiceProfiles() {
-            try {
-                const response = await fetch("/api/voice-profiles");
-                const result = await response.json();
-
-                if (!response.ok || !result.success) {
-                    throw new Error(
-                        result.message ||
-                        "Voice profiles could not be loaded."
-                    );
-                }
-
-                voiceProfileSelect.innerHTML = "";
-
-                const defaultOption =
-                    document.createElement("option");
-
-                defaultOption.value = "";
-                defaultOption.textContent =
-                    "Select a voice profile";
-
-                voiceProfileSelect.appendChild(defaultOption);
-
-                if (result.profiles.length === 0) {
-                    defaultOption.textContent =
-                        "No voice profiles available";
-
-                    voiceProfileSelect.disabled = true;
-                    return;
-                }
-
-                result.profiles.forEach((profile) => {
-                    const option =
-                        document.createElement("option");
-
-                    option.value = profile.id;
-
-                    option.textContent =
-                        `${profile.name} (${profile.format})`;
-
-                    voiceProfileSelect.appendChild(option);
-                });
-            } catch (error) {
-                console.error(error);
-
-                voiceProfileSelect.innerHTML =
-                    "<option value=''>Failed to load profiles</option>";
-
-                voiceProfileSelect.disabled = true;
-
-                generationStatus.textContent = error.message;
-            }
-        }
-
-        function beginProgress() {
-            progressWrapper.hidden = false;
-
-            let seconds = 0;
-
-            elapsedTime.textContent = "Elapsed: 00:00";
-
-            elapsedInterval = setInterval(() => {
-
-                seconds++;
-
-                const mins = String(
-                    Math.floor(seconds / 60)
-                ).padStart(2, "0");
-
-                const secs = String(
-                    seconds % 60
-                ).padStart(2, "0");
-
-                elapsedTime.textContent =
-                    `Elapsed: ${mins}:${secs}`;
-
-            }, 1000);
-
-            const stages = [
-                {
-                    percentage: 10,
-                    message: "Preparing generation request..."
-                },
-                {
-                    percentage: 25,
-                    message: "Loading the selected voice..."
-                },
-                {
-                    percentage: 40,
-                    message: "Preparing the Chatterbox model..."
-                },
-                {
-                    percentage: 60,
-                    message: "Analysing the reference voice..."
-                },
-                {
-                    percentage: 75,
-                    message: "Generating cloned speech..."
-                },
-                {
-                    percentage: 90,
-                    message: "Still generating — please keep this page open..."
-                }
-            ];
-
-            let stageIndex = 0;
-
-            progressSection.hidden = false;
-            progressBar.style.width = "5%";
-
-            generationStatus.textContent =
-                "Preparing generation request...";
-
-            progressTimer = window.setInterval(() => {
-                if (stageIndex >= stages.length) {
-                    window.clearInterval(progressTimer);
-                    progressTimer = null;
-                    return;
-                }
-
-                const stage = stages[stageIndex];
-
-                progressBar.style.width =
-                    `${stage.percentage}%`;
-
-                progressStatus.textContent =
-                    stage.message;
-
-                progressPercentage.textContent =
-                    `${stage.percentage}%`;
-
-                generationStatus.textContent =
-                    stage.message;
-
-                stageIndex += 1;
-            }, 2500);
-        }
-
-        function finishProgress(success) {
-
-            if (progressTimer !== null) {
-                clearInterval(progressTimer);
-                progressTimer = null;
-            }
-
-            if (elapsedInterval !== null) {
-                clearInterval(elapsedInterval);
-                elapsedInterval = null;
-            }
-
-            if (success) {
-
-                progressBar.style.width = "100%";
-                progressPercentage.textContent = "100%";
-
-                progressStatus.textContent =
-                    "Speech generated successfully!";
-
-                generationStatus.textContent =
-                    "Speech generated successfully!";
-
-            } else {
-
-                progressBar.style.width = "0%";
-                progressPercentage.textContent = "0%";
-
-                progressStatus.textContent =
-                    "Generation failed.";
-
-            }
-        }
-
-        generateForm.addEventListener("submit", async (event) => {
-            event.preventDefault();
-
-            const profileId =
-                voiceProfileSelect.value;
-
-            const text =
-                speechTextInput.value.trim();
-
-            if (!profileId || !text) {
-                generationStatus.textContent =
-                    "Please select a voice and enter some text.";
-
-                return;
-            }
-
-            generateButton.disabled = true;
-            generateButton.textContent = "Generating...";
-
-            voiceProfileSelect.disabled = true;
-            speechTextInput.disabled = true;
-
-            audioResult.hidden = true;
-
-            beginProgress();
-
-            try {
-                const response = await fetch(
-                    "/api/generate-speech",
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            profile_id: profileId,
-                            text: text
-                        })
-                    }
-                );
-
-                const responseText = await response.text();
-
-                let result;
-
-                try {
-                    result = JSON.parse(responseText);
-                } catch {
-                    console.error(
-                        "Non-JSON server response:",
-                        responseText
-                    );
-
-                    throw new Error(
-                        `Server error (${response.status}). ` +
-                        "Check the Flask terminal."
-                    );
-                }
-
-                if (!response.ok || !result.success) {
-                    throw new Error(
-                        result.message ||
-                        "Speech generation failed."
-                    );
-                }
-
-                const audioUrl =
-                    `${result.audio.url}?t=${Date.now()}`;
-
-                generatedAudio.src = audioUrl;
-
-                downloadLink.href = result.audio.url;
-                downloadLink.download =
-                    result.audio.filename;
-
-                audioResult.hidden = false;
-
-                finishProgress(true);
-            } catch (error) {
-                console.error(error);
-
-                finishProgress(false);
-
-                generationStatus.textContent =
-                    error.message ||
-                    "Speech generation failed.";
-            } finally {
-                generateButton.disabled = false;
-                generateButton.textContent =
-                    "Generate Speech";
-
-                voiceProfileSelect.disabled = false;
-                speechTextInput.disabled = false;
-            }
-        });
-
-        loadVoiceProfiles();
-    </script>
 </body>
 </html>

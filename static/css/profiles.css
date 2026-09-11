@@ -1,6 +1,11 @@
+/* ========================================
+   PAGE
+======================================== */
+
 .profile-page {
     min-height: calc(100vh - 72px);
-    padding: 56px 20px;
+    padding: 56px 20px 80px;
+
     background:
         radial-gradient(
             circle at top left,
@@ -10,16 +15,25 @@
         linear-gradient(135deg, #070b16, #0c1927);
 }
 
+
+/* ========================================
+   CREATE PROFILE CARD
+======================================== */
+
 .analysis-card {
     width: min(760px, 100%);
     margin: 0 auto;
     padding: 42px;
+
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 24px;
+
     background: rgba(255, 255, 255, 0.97);
+
     box-shadow:
         0 30px 80px rgba(0, 0, 0, 0.35),
         0 0 0 1px rgba(255, 255, 255, 0.03);
+
     color: #111827;
 }
 
@@ -29,36 +43,86 @@
 
 .analysis-heading h1 {
     margin: 6px 0 10px;
+
     color: #111827;
+
     font-size: clamp(2rem, 4vw, 2.7rem);
     line-height: 1.1;
 }
 
 .analysis-heading > p:last-child {
     margin: 0;
+
     color: #64748b;
+
     font-size: 1rem;
     line-height: 1.6;
 }
 
 .eyebrow {
     margin: 0;
-    color: #4f46e5;
+
+    color: #6366f1;
+
     font-size: 0.78rem;
     font-weight: 800;
+
     letter-spacing: 0.12em;
     text-transform: uppercase;
 }
 
+
+/* ========================================
+   NO AUDIO
+======================================== */
+
+.no-audio-message {
+    padding: 36px;
+
+    border: 1px dashed #94a3b8;
+    border-radius: 16px;
+
+    background: #f8fafc;
+
+    text-align: center;
+}
+
+.no-audio-message h2 {
+    margin: 0 0 8px;
+
+    color: #111827;
+}
+
+.no-audio-message p {
+    margin: 0 0 20px;
+
+    color: #64748b;
+}
+
+
+/* ========================================
+   UPLOADED AUDIO SUCCESS
+======================================== */
+
 .success-message {
     display: flex;
     align-items: flex-start;
+
     gap: 14px;
+
     padding: 18px;
     margin-bottom: 24px;
+
     border: 1px solid #bbf7d0;
     border-radius: 16px;
-    background: linear-gradient(135deg, #ecfdf3, #f0fdf4);
+
+    background:
+        linear-gradient(
+            135deg,
+            #ecfdf3,
+            #f0fdf4
+        );
+
     color: #14532d;
 }
 
@@ -68,77 +132,123 @@
 
 .success-message p {
     margin: 4px 0 0;
+
     color: #3f7654;
 }
 
 .success-icon {
     display: grid;
     place-items: center;
+
     width: 34px;
     height: 34px;
+
     flex-shrink: 0;
+
     border-radius: 50%;
+
     background: #16a34a;
     color: #ffffff;
-    font-size: 1.1rem;
+
+    font-size: 1.05rem;
     font-weight: 800;
 }
 
+
+/* ========================================
+   AUDIO DETAILS
+======================================== */
+
 .audio-details {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
     gap: 16px;
+
     margin-bottom: 24px;
 }
 
 .detail-item {
     min-width: 0;
+
     padding: 18px;
+
     border: 1px solid #e2e8f0;
     border-radius: 16px;
-    background: #ffffff;
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
-}
 
-.detail-item strong {
-    display: block;
-    overflow-wrap: anywhere;
-    color: #111827;
-    font-size: 1rem;
+    background: #ffffff;
+
+    box-shadow:
+        0 8px 24px rgba(15, 23, 42, 0.04);
 }
 
 .detail-label {
     display: block;
+
     margin-bottom: 7px;
+
     color: #64748b;
+
     font-size: 0.82rem;
     font-weight: 700;
+
     letter-spacing: 0.02em;
 }
 
+.detail-item strong {
+    display: block;
+
+    color: #111827;
+
+    font-size: 1rem;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ========================================
+   ANALYSIS STATUS
+======================================== */
+
 .analysis-status {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+
     gap: 20px;
+
     padding: 20px;
     margin-bottom: 24px;
+
     border: 1px solid #e2e8f0;
     border-radius: 16px;
-    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fafc,
+            #f1f5f9
+        );
 }
 
 .analysis-status h2 {
     margin: 4px 0 0;
+
     color: #111827;
+
     font-size: 1.08rem;
 }
 
 .status-badge {
     padding: 8px 14px;
+
     border-radius: 999px;
+
     font-size: 0.82rem;
     font-weight: 800;
+
     white-space: nowrap;
 }
 
@@ -157,27 +267,42 @@
     color: #166534;
 }
 
+
+/* ========================================
+   PROFILE NAME
+======================================== */
+
 .profile-name-field {
     margin-bottom: 18px;
 }
 
 .profile-name-field label {
     display: block;
+
     margin-bottom: 9px;
+
     color: #111827;
+
     font-weight: 800;
 }
 
 .profile-name-field input {
     width: 100%;
+
     box-sizing: border-box;
+
     padding: 14px 15px;
+
     border: 1px solid #cbd5e1;
     border-radius: 12px;
+
     background: #ffffff;
     color: #111827;
+
     font: inherit;
+
     outline: none;
+
     transition:
         border-color 0.2s ease,
         box-shadow 0.2s ease;
@@ -185,21 +310,33 @@
 
 .profile-name-field input:focus {
     border-color: #6366f1;
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+
+    box-shadow:
+        0 0 0 4px rgba(99, 102, 241, 0.12);
 }
 
 .profile-name-field small {
     display: block;
+
     margin-top: 8px;
+
     color: #64748b;
+
     line-height: 1.5;
 }
 
+
+/* ========================================
+   PROFILE CREATION BUTTONS
+======================================== */
+
 .analysis-actions {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+
     gap: 14px;
+
     margin-top: 26px;
 }
 
@@ -209,11 +346,17 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     min-height: 46px;
+
     padding: 12px 20px;
+
     border-radius: 12px;
+
     font-weight: 800;
+
     text-decoration: none;
+
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease,
@@ -223,26 +366,41 @@
 .primary-button,
 .primary-link {
     border: none;
-    background: linear-gradient(135deg, #6366f1, #4f46e5);
+
+    background:
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #4f46e5
+        );
+
     color: #ffffff;
-    box-shadow: 0 12px 24px rgba(79, 70, 229, 0.25);
+
+    box-shadow:
+        0 12px 24px rgba(79, 70, 229, 0.25);
+
     cursor: pointer;
 }
 
 .primary-button:hover,
 .primary-link:hover {
     transform: translateY(-1px);
-    box-shadow: 0 16px 30px rgba(79, 70, 229, 0.32);
+
+    box-shadow:
+        0 16px 30px rgba(79, 70, 229, 0.32);
 }
 
 .primary-button:disabled {
     cursor: not-allowed;
+
     opacity: 0.65;
+
     transform: none;
 }
 
 .secondary-link {
     border: 1px solid #cbd5e1;
+
     background: #ffffff;
     color: #334155;
 }
@@ -251,9 +409,16 @@
     background: #f8fafc;
 }
 
+
+/* ========================================
+   MESSAGES
+======================================== */
+
 .profile-message {
     min-height: 24px;
+
     margin: 0;
+
     font-weight: 700;
 }
 
@@ -265,33 +430,452 @@
     color: #15803d;
 }
 
-.no-audio-message {
+.hidden {
+    display: none !important;
+}
+
+
+/* ========================================
+   SAVED VOICE PROFILES SECTION
+======================================== */
+
+.saved-profiles-section {
+    width: min(1100px, 100%);
+
+    margin: 52px auto 0;
+
+    color: #ffffff;
+}
+
+.saved-profiles-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-bottom: 26px;
+}
+
+.saved-profiles-heading .eyebrow {
+    color: #8b83ff;
+}
+
+.saved-profiles-heading h2 {
+    margin: 7px 0;
+
+    color: #ffffff;
+
+    font-size: clamp(1.8rem, 3vw, 2.3rem);
+}
+
+.saved-profiles-heading p {
+    margin: 0;
+
+    color: #9da8bb;
+
+    font-size: 1rem;
+}
+
+
+/* ========================================
+   SAVED PROFILE GRID
+======================================== */
+
+.saved-profiles-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(260px, 1fr));
+
+    gap: 20px;
+}
+
+
+/* ========================================
+   SAVED PROFILE CARD
+======================================== */
+
+.voice-profile-card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    min-height: 270px;
+
+    padding: 26px;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.09);
+
+    border-radius: 22px;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(99, 102, 241, 0.11),
+            transparent 40%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.07),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.22);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.voice-profile-card:hover {
+    transform: translateY(-5px);
+
+    border-color:
+        rgba(99, 102, 241, 0.5);
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(99, 102, 241, 0.17),
+            transparent 42%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.08),
+            rgba(255, 255, 255, 0.03)
+        );
+
+    box-shadow:
+        0 28px 60px rgba(0, 0, 0, 0.32);
+}
+
+
+/* ========================================
+   PROFILE CARD TOP
+======================================== */
+
+.voice-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 16px;
+}
+
+
+/* ========================================
+   VOICE AVATAR
+======================================== */
+
+.voice-avatar {
+    display: grid;
+    place-items: center;
+
+    width: 68px;
+    height: 68px;
+
+    flex-shrink: 0;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6d5dfc,
+            #4f46e5
+        );
+
+    color: #ffffff;
+
+    font-size: 1.6rem;
+    font-weight: 800;
+
+    box-shadow:
+        0 14px 30px rgba(79, 70, 229, 0.3);
+}
+
+
+/* ========================================
+   AUDIO PREVIEW BUTTON
+======================================== */
+
+.voice-preview-button {
+    display: grid;
+    place-items: center;
+
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    padding: 0;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.13);
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.07);
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.12);
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.voice-preview-button:hover {
+    transform: scale(1.07);
+
+    border-color:
+        rgba(129, 140, 248, 0.75);
+
+    background:
+        rgba(99, 102, 241, 0.22);
+
+    box-shadow:
+        0 10px 25px rgba(79, 70, 229, 0.25);
+}
+
+.voice-preview-button.playing {
+    border-color: transparent;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #4f46e5
+        );
+
+    box-shadow:
+        0 10px 28px rgba(79, 70, 229, 0.4);
+}
+
+.voice-preview-button:disabled {
+    opacity: 0.35;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+.preview-icon {
+    display: block;
+
+    font-size: 0.92rem;
+
+    line-height: 1;
+}
+
+
+/* ========================================
+   PROFILE INFORMATION
+======================================== */
+
+.voice-profile-info {
+    margin-top: 24px;
+}
+
+.voice-profile-info h3 {
+    margin: 0 0 8px;
+
+    color: #ffffff;
+
+    font-size: 1.12rem;
+    font-weight: 800;
+
+    line-height: 1.35;
+
+    overflow-wrap: anywhere;
+}
+
+.voice-profile-info p {
+    margin: 0;
+
+    color: #91a0b6;
+
+    font-size: 0.82rem;
+    font-weight: 700;
+
+    letter-spacing: 0.05em;
+
+    text-transform: uppercase;
+}
+
+
+/* ========================================
+   PREVIEW LABEL
+======================================== */
+
+.voice-preview-text {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 18px;
+
+    color: #8491a7;
+
+    font-size: 0.76rem;
+    font-weight: 700;
+
+    letter-spacing: 0.05em;
+
+    text-transform: uppercase;
+}
+
+.preview-dot {
+    width: 7px;
+    height: 7px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #6366f1;
+
+    box-shadow:
+        0 0 10px rgba(99, 102, 241, 0.75);
+}
+
+
+/* ========================================
+   USE VOICE BUTTON
+======================================== */
+
+.profile-card-action {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-top: auto;
+    padding: 20px 0 0;
+
+    border: none;
+    border-top:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    background: transparent;
+
+    color: #c7c9ff;
+
+    font: inherit;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    transition:
+        color 0.2s ease;
+}
+
+.profile-card-action:hover {
+    color: #ffffff;
+}
+
+.profile-card-action span:last-child {
+    font-size: 1.2rem;
+
+    transition:
+        transform 0.2s ease;
+}
+
+.profile-card-action:hover span:last-child {
+    transform: translateX(4px);
+}
+
+
+/* ========================================
+   LOADING / EMPTY PROFILES
+======================================== */
+
+.profiles-loading,
+.profiles-empty {
+    grid-column: 1 / -1;
+
     padding: 36px;
-    border: 1px dashed #94a3b8;
-    border-radius: 16px;
-    background: #f8fafc;
+
+    border:
+        1px dashed rgba(255, 255, 255, 0.16);
+
+    border-radius: 20px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    color: #9da8bb;
+
     text-align: center;
 }
 
-.no-audio-message h2 {
-    color: #111827;
+.profiles-empty h3 {
+    margin: 14px 0 8px;
+
+    color: #ffffff;
 }
 
-.no-audio-message p {
-    color: #64748b;
+.profiles-empty p {
+    margin: 0 0 20px;
+
+    color: #9da8bb;
 }
 
-.hidden {
-    display: none;
+.empty-profile-icon {
+    display: grid;
+    place-items: center;
+
+    width: 58px;
+    height: 58px;
+
+    margin: 0 auto;
+
+    border-radius: 16px;
+
+    background:
+        rgba(99, 102, 241, 0.14);
+
+    color: #8b83ff;
+
+    font-size: 1.7rem;
+    font-weight: 800;
 }
 
-@media (max-width: 650px) {
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 700px) {
+
     .profile-page {
-        padding: 30px 14px;
+        padding: 30px 14px 60px;
     }
 
     .analysis-card {
         padding: 28px 20px;
+
         border-radius: 20px;
     }
 
@@ -301,16 +885,42 @@
 
     .analysis-status {
         align-items: flex-start;
+
         flex-direction: column;
     }
 
     .analysis-actions {
         align-items: stretch;
+
         flex-direction: column-reverse;
     }
 
     .primary-button,
     .secondary-link {
         width: 100%;
+    }
+
+    .saved-profiles-section {
+        margin-top: 40px;
+    }
+
+    .saved-profiles-heading {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .saved-profiles-heading .primary-link {
+        width: fit-content;
+    }
+
+    .saved-profiles-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .voice-profile-card {
+        min-height: 250px;
+
+        padding: 22px;
     }
 }

@@ -31,7 +31,9 @@ speech_generator_service = SpeechGeneratorService()
 app.config["MAX_CONTENT_LENGTH"] = MAX_FILE_SIZE
 
 TEMP_UPLOAD_FOLDER.mkdir(parents=True, exist_ok=True)
+PROFILE_AUDIO_FOLDER.mkdir(parents=True, exist_ok=True)
 GENERATED_AUDIO_FOLDER.mkdir(parents=True, exist_ok=True)
+PROFILE_DATABASE_FILE.parent.mkdir(parents=True, exist_ok=True)
 
 
 def allowed_file(filename: str) -> bool:
@@ -39,6 +41,34 @@ def allowed_file(filename: str) -> bool:
         "." in filename
         and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
     )
+
+
+def add_preview_url(profile: dict) -> dict:
+    """
+    Add a browser-accessible URL for the original audio
+    belonging to a voice profile.
+    """
+    profile_with_preview = dict(profile)
+
+    stored_filename = str(
+        profile.get("stored_filename", "")
+    ).strip()
+
+    if not stored_filename:
+        profile_with_preview["preview_url"] = None
+        return profile_with_preview
+
+    safe_filename = Path(stored_filename).name
+
+    if safe_filename != stored_filename:
+        profile_with_preview["preview_url"] = None
+        return profile_with_preview
+
+    profile_with_preview["preview_url"] = (
+        f"/static/uploads/profiles/{safe_filename}"
+    )
+
+    return profile_with_preview
 
 
 @app.route("/")
@@ -143,6 +173,8 @@ def create_voice_profile():
             duration=data["duration"]
         )
 
+        profile = add_preview_url(profile)
+
         return jsonify({
             "success": True,
             "message": "Voice profile created successfully.",
@@ -167,14 +199,21 @@ def create_voice_profile():
             "message": "The voice profile could not be saved."
         }), 500
 
+
 @app.route("/api/voice-profiles", methods=["GET"])
 def get_voice_profiles():
     profiles = voice_profile_service.get_profiles()
 
+    profiles_with_preview = [
+        add_preview_url(profile)
+        for profile in profiles
+    ]
+
     return jsonify({
         "success": True,
-        "profiles": profiles
+        "profiles": profiles_with_preview
     }), 200
+
 
 @app.route("/api/generate-speech", methods=["POST"])
 def generate_speech():
@@ -226,8 +265,8 @@ def generate_speech():
             "message": (
                 "This voice profile is not stored as a WAV file. "
                 "Please create or convert it to WAV first."
-        )
-    }), 400
+            )
+        }), 400
 
     output_filename = f"{uuid4().hex}.wav"
     output_path = GENERATED_AUDIO_FOLDER / output_filename
@@ -267,7 +306,7 @@ def generate_speech():
             "success": False,
             "message": "Speech generation failed. Check the terminal."
         }), 500
-    
+
 
 @app.errorhandler(413)
 def file_too_large(_error):
